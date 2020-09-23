@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Statiq.App;
+using Statiq.Common;
 using Statiq.Web;
 
 namespace bsakel.github.io
@@ -10,6 +11,11 @@ namespace bsakel.github.io
             await Bootstrapper
                 .Factory
                 .CreateWeb(args)
+                .DeployToGitHubPages(
+                    "bsakel",
+                    "bsakel.github.io",
+                    Config.FromSetting<string>("GITHUB_TOKEN")
+                )
                 .RunAsync();
     }       
 }
