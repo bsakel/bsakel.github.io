@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@Document.GetString("Title") - bsakel</title>
+    <link rel="stylesheet" href="/assets/css/terminal.css" />
+    <style>
+        .container { max-width: 720px; margin: 0 auto; padding: 20px 15px; }
+        header { border-bottom: 2px solid var(--accent); padding-bottom: 10px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: baseline; }
+        header .header-nav { font-size: 0.8em; }
+        header .header-nav a { text-decoration: none; }
+        header .header-nav a:hover { text-decoration: underline; }
+        footer { border-top: 2px solid var(--accent); padding-top: 10px; margin-top: 40px; font-size: 0.85em; display: flex; justify-content: space-between; align-items: baseline; }
+        footer .footer-links a { margin-left: 12px; text-decoration: none; }
+        footer .footer-links a:hover { text-decoration: underline; }
+    </style>
+    @if (!Context.Settings.GetBool("IsPreview"))
+        {
+            <script defer src="https://cloud.umami.is/script.js" data-website-id="d2da9e7a-a4de-487e-8199-2219f8cf2d22"></script>
+        }
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="/">bsakel@@github:~$</a>
+            <span class="header-nav">
+                @if (Context.Settings.GetBool("IsPreview"))
+                {
+                    <a href="/drafts/">drafts</a>
+                    @:&nbsp;|&nbsp;
+                }
+                <a href="/tags/">tags</a>
+            </span>
+        </header>
+        <main>
+            @RenderBody()
+            @if (Document.ContainsKey("Tags") && !Document.ContainsKey(Keys.Children))
+            {
+                <div class="post-tags-footer">
+                    <span>Tags:</span>
+                    @foreach (var tag in Document.GetList<string>("Tags"))
+                    {
+                        <a href="/tags/@(tag.ToLower().Replace(" ", "-"))/" class="tag">[@tag]</a>
+                    }
+                </div>
+            }
+        </main>
+        <footer>
+            <span>&copy; @DateTime.Now.Year bsakel</span>
+            <span class="footer-links">
+                <a href="/profile">about me</a>
+                <a href="https://github.com/bsakel">github</a>
+                <a href="https://www.linkedin.com/in/vasilis-sakellarios-872b583b">linkedin</a>
+            </span>
+        </footer>
+    </div>
+</body>
+</html>

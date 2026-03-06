@@ -1,0 +1,48 @@
+@foreach (IDocument child in Document.GetChildren())
+{
+    <article class="post-card">
+        <h2><a href="@child.GetLink()">@child.GetString("Title")</a></h2>
+        <div class="post-meta">
+            <time>@child.GetDateTime("Published").ToString("yyyy-MM-dd")</time>
+            @if (child.ContainsKey("Tags"))
+            {
+                <span class="post-tags">
+                    @foreach (var tag in child.GetList<string>("Tags"))
+                    {
+                        <a href="/tags/@(tag.ToLower().Replace(" ", "-"))/" class="tag">[@tag]</a>
+                    }
+                </span>
+            }
+        </div>
+    </article>
+}
+
+@{
+    IDocument previous = Document.GetDocument(Keys.Previous);
+    IDocument next = Document.GetDocument(Keys.Next);
+    int currentPage = Document.GetInt(Keys.Index, 1);
+    int totalPages = Document.GetInt(Keys.TotalPages, 1);
+    int totalItems = Document.GetInt(Keys.TotalItems, 0);
+}
+@if (totalPages > 1)
+{
+    <nav class="pagination">
+        @if (previous != null)
+        {
+            <a href="@previous.GetLink()" class="pagination-link">&laquo; Newer</a>
+        }
+        else
+        {
+            <span></span>
+        }
+        <span class="pagination-info">Page @currentPage of @totalPages</span>
+        @if (next != null)
+        {
+            <a href="@next.GetLink()" class="pagination-link">Older &raquo;</a>
+        }
+        else
+        {
+            <span></span>
+        }
+    </nav>
+}

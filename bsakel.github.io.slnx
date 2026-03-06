@@ -1,0 +1,21 @@
+<Solution>
+  <Folder Name="/.github/" />
+  <Folder Name="/.github/workflows/">
+    <File Path=".github/workflows/build.yml" />
+  </Folder>
+  <Folder Name="/.vscode/">
+    <File Path=".vscode/launch.json" />
+    <File Path=".vscode/tasks.json" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
+    <File Path="CLAUDE.md" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/bsakel.github.io/bsakel.github.io.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/bsakel.github.io.Tests/bsakel.github.io.Tests.csproj" />
+  </Folder>
+</Solution>

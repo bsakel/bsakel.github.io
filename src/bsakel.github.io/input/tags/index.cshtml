@@ -1,0 +1,58 @@
+@if (Document.ContainsKey(Keys.GroupKey))
+{
+    <h1>[@Document.GetString(Keys.GroupKey)]</h1>
+
+    @foreach (IDocument child in Document.GetChildren())
+    {
+        <article class="post-card">
+            <h2>
+            <a href="@child.GetLink()">@child.GetString("Title")</a>
+            @if (child.GetBool("IsDraft"))
+            {
+                <span class="draft-badge">[draft]</span>
+            }
+        </h2>
+            <div class="post-meta">
+                <time>@child.GetDateTime("Published").ToString("yyyy-MM-dd")</time>
+                @if (child.ContainsKey("Tags"))
+                {
+                    <span class="post-tags">
+                        @foreach (var tag in child.GetList<string>("Tags"))
+                        {
+                            <a href="/tags/@(tag.ToLower().Replace(" ", "-"))/" class="tag">[@tag]</a>
+                        }
+                    </span>
+                }
+            </div>
+        </article>
+    }
+
+    var previous = Document.GetDocument(Keys.Previous);
+    var next = Document.GetDocument(Keys.Next);
+    if (previous != null || next != null)
+    {
+        <nav class="pagination">
+            @if (previous != null)
+            {
+                <a href="@previous.GetLink()" class="pagination-link">&laquo; Newer</a>
+            }
+            @if (next != null)
+            {
+                <a href="@next.GetLink()" class="pagination-link">Older &raquo;</a>
+            }
+        </nav>
+    }
+}
+else
+{
+    <div class="tag-cloud">
+        @foreach (IDocument child in Document.GetChildren())
+        {
+            var tagName = child.GetString(Keys.GroupKey);
+            var count = child.GetChildren().Count();
+            <a href="/tags/@(tagName.ToLower().Replace(" ", "-"))/" class="tag-cloud-item">
+                [@tagName] <span class="tag-count">(@count)</span>
+            </a>
+        }
+    </div>
+}

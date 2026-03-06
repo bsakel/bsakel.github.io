@@ -361,7 +361,8 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
-# Statiq 
+# Statiq
 [Tt]emp/
 [Oo]utput/
+[Cc]ache/
 wwwroot/
