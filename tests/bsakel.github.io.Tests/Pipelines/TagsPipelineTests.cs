@@ -11,9 +11,10 @@ public class TagsPipelineTests
     private readonly TagsPipeline _pipeline = new();
 
     [Fact]
-    public void DependsOnPostsPipeline()
+    public void DependsOnPostsAndDraftsPipelines()
     {
         Assert.Contains(nameof(PostsPipeline), _pipeline.Dependencies);
+        Assert.Contains(nameof(DraftsPipeline), _pipeline.Dependencies);
     }
 
     [Fact]
@@ -28,7 +29,7 @@ public class TagsPipelineTests
     {
         Assert.NotNull(_pipeline.ProcessModules);
         Assert.Equal(6, _pipeline.ProcessModules.Count);
-        Assert.IsType<ReplaceDocuments>(_pipeline.ProcessModules[0]);
+        Assert.IsType<ExecuteConfig>(_pipeline.ProcessModules[0]);
         Assert.IsType<OrderDocuments>(_pipeline.ProcessModules[1]);
         Assert.IsType<GroupDocuments>(_pipeline.ProcessModules[2]);
         Assert.IsType<ExecuteConfig>(_pipeline.ProcessModules[3]);
